@@ -17,7 +17,7 @@ namespace Complete
 
         protected Transform target;
 
-        protected Vector3 destination;
+        protected Vector3 moveTo;
         
         void Awake() {
             tankMover = GetComponent<TankMovement>();
@@ -34,7 +34,7 @@ namespace Complete
         public void Reset()
         {
             target = null;
-            destination.y = -2f;
+            moveTo.y = -2f;
 
             if (tankShooter) tankShooter.Reset();
             if (tankSensor) tankSensor.Reset();

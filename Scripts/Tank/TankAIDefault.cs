@@ -18,15 +18,15 @@ public class TankAIDefault : Complete.TankAI {
 
             if (sqrRange > 144f)
             {
-                if ((destination - enemyPos).sqrMagnitude > 4f)
+                if ((moveTo - enemyPos).sqrMagnitude > 4f)
                 {
-                    destination = enemyPos;
+                    moveTo = enemyPos;
 
-                    if ((pos - destination).sqrMagnitude > 16f)
+                    if ((pos - moveTo).sqrMagnitude > 16f)
                     {
-						if (!tankNav.SetDestination(destination))
+						if (!tankNav.SetDestination(moveTo))
 						{
-							destination.y = -2;
+							moveTo.y = -2;
 						}
                     }
                 }
@@ -76,25 +76,25 @@ public class TankAIDefault : Complete.TankAI {
             if (!target)
             {
 
-                if (destination.y > -1f)
+                if (moveTo.y > -1f)
                 {
                     if (tankNav.remainingDistance < 2f)
                     {
                         //Debug.Log(name + " path complete");
-                        destination.y = -2f;
+                        moveTo.y = -2f;
                     }
                 }
 
-                if (destination.y < -1f)
+                if (moveTo.y < -1f)
                 {
                     //Debug.Log(name + " getting random position");
-                    if (RandomMove(out destination))
+                    if (RandomMove(out moveTo))
                     {
-						tankNav.SetDestination(destination);
+						tankNav.SetDestination(moveTo);
                     }
                     else
                     {
-                        destination.y = -2f;
+                        moveTo.y = -2f;
                     }
                 }
             }
