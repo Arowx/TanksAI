@@ -58,6 +58,7 @@ namespace Complete
         
         private void LateUpdate ()
         {
+			m_TurnInputValue = Mathf.Clamp(m_TurnInputValue, -1, 1);
             EngineAudio ();
 
             Move();
