@@ -5,8 +5,7 @@ using System;
 namespace Complete
 {
     public class TankAI : MonoBehaviour {
-
-        [HideInInspector]
+        
         public string tankName = "Arowx";
 
         public TankMovement tankMover;
@@ -43,6 +42,7 @@ namespace Complete
 
             if (tankShooter) tankShooter.Reset();
             if (tankSensor) tankSensor.Reset();
+            if (tankHealth) tankHealth.Reset();
         }
 
         // Your TankAI should mainly be controlled from the Update() function
@@ -184,5 +184,9 @@ namespace Complete
             return false;
         }
         
+        public void OnDestroy()
+        {
+            Destroy(moveToMarker.gameObject);
+        }
     }
 }
