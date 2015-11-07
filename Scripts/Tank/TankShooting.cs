@@ -6,15 +6,24 @@ namespace Complete
     public class TankShooting : MonoBehaviour
     {
         public int m_PlayerNumber = 1;              // Used to identify the different players.
-        public Rigidbody m_Shell;                   // Prefab of the shell.
-        public Transform m_FireTransform;           // A child of the tank where the shells are spawned.
-        public Slider m_AimSlider;                  // A child of the tank that displays the current launch force.
-        public AudioSource m_ShootingAudio;         // Reference to the audio source used to play the shooting audio. NB: different to the movement audio source.
-        public AudioClip m_ChargingClip;            // Audio that plays when each shot is charging up.
-        public AudioClip m_FireClip;                // Audio that plays when each shot is fired.
-        public float m_MinLaunchForce = 15f;        // The force given to the shell if the fire button is not held.
-        public float m_MaxLaunchForce = 30f;        // The force given to the shell if the fire button is held for the max charge time.
-        public float m_MaxChargeTime = 0.75f;       // How long the shell can charge for before it is fired at max force.
+		[SerializeField]
+        private Rigidbody m_Shell;                   // Prefab of the shell.
+		[SerializeField]
+        private Transform m_FireTransform;           // A child of the tank where the shells are spawned.
+		[SerializeField]
+        private Slider m_AimSlider;                  // A child of the tank that displays the current launch force.
+		[SerializeField]
+        private AudioSource m_ShootingAudio;         // Reference to the audio source used to play the shooting audio. NB: different to the movement audio source.
+		[SerializeField]
+        private AudioClip m_ChargingClip;            // Audio that plays when each shot is charging up.
+		[SerializeField]
+        private AudioClip m_FireClip;                // Audio that plays when each shot is fired.
+		[SerializeField]
+        private float m_MinLaunchForce = 15f;        // The force given to the shell if the fire button is not held.
+		[SerializeField]
+        private float m_MaxLaunchForce = 30f;        // The force given to the shell if the fire button is held for the max charge time.
+		[SerializeField]
+        private float m_MaxChargeTime = 0.75f;       // How long the shell can charge for before it is fired at max force.
 
 
         public bool m_FireButton;                // The input axis that is used for launching shells.
@@ -25,7 +34,8 @@ namespace Complete
 
         private bool m_Reloading;
 
-        public float m_ShotDelay = 0.5f;
+		[SerializeField]
+        private float m_ShotDelay = 0.5f;
 
         private void OnEnable()
         {
