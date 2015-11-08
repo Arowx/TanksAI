@@ -8,7 +8,7 @@ namespace Complete
 
         private float chargingTime;
 
-        public void Awake()
+        protected override void SetName()
         {            
             tankName = "Arowx2";
         }
@@ -95,20 +95,15 @@ namespace Complete
 
                     if ((pos - moveTo).sqrMagnitude > 2f)
                     {
-                        if (tankNav.SetDestination(moveTo))
-                        {
-                            moveToMarker.position = moveTo;
-                        }
+                        tankNav.SetDestination(moveTo);
+                        
                     }
                     else if (!los)
                     {
                         fromEnemy = Quaternion.AngleAxis(5f, Vector3.up) * fromEnemy;
                         moveTo = enemyPos + fromEnemy;
 
-                        if (tankNav.SetDestination(moveTo))
-                        {
-                            moveToMarker.position = moveTo;
-                        }
+                        tankNav.SetDestination(moveTo);
                     }
                 }                
                     
@@ -120,7 +115,6 @@ namespace Complete
                 {
                     RandomMove(out moveTo);
                     tankNav.SetDestination(moveTo);
-                    moveToMarker.position = moveTo;
                 }
             }           
         }

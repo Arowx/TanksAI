@@ -5,9 +5,9 @@ using System;
 namespace Complete
 {
     public class TankAIDQ : TankAI {
-      
 
-        public void Awake()
+
+        protected override void SetName()
         {            
             tankName = "DanielQuick";
         }

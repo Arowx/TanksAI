@@ -6,12 +6,18 @@ namespace Complete
 {
     public class TankHealth : MonoBehaviour
     {
-        public float m_StartingHealth = 100f;               // The amount of health each tank starts with.
-        public Slider m_Slider;                             // The slider to represent how much health the tank currently has.
-        public Image m_FillImage;                           // The image component of the slider.
-        public Color m_FullHealthColor = Color.green;       // The color the health bar will be when on full health.
-        public Color m_ZeroHealthColor = Color.red;         // The color the health bar will be when on no health.
-        public GameObject m_ExplosionPrefab;                // A prefab that will be instantiated in Awake, then used whenever the tank dies.
+		[SerializeField]
+        private float m_StartingHealth = 100f;               // The amount of health each tank starts with.
+		[SerializeField]
+        private Slider m_Slider;                             // The slider to represent how much health the tank currently has.
+		[SerializeField]
+        private Image m_FillImage;                           // The image component of the slider.
+		[SerializeField]
+        private Color m_FullHealthColor = Color.green;       // The color the health bar will be when on full health.
+		[SerializeField]
+        private Color m_ZeroHealthColor = Color.red;         // The color the health bar will be when on no health.
+		[SerializeField]
+        private GameObject m_ExplosionPrefab;                // A prefab that will be instantiated in Awake, then used whenever the tank dies.
         
         
         private AudioSource m_ExplosionAudio;               // The audio source to play when the tank explodes.
@@ -19,10 +25,23 @@ namespace Complete
         private float m_CurrentHealth;                      // How much health the tank currently has.
         private bool m_Dead;                                // Has the tank been reduced beyond zero health yet?
 
+
         internal void Reset()
         {
             m_CurrentHealth = m_StartingHealth;
         }
+
+		public float StartingHealth {
+			get {
+				return m_StartingHealth;
+			}
+		}
+
+		public float CurrentHealth {
+			get {
+				return m_CurrentHealth;
+			}
+		}
 
         private void Awake ()
         {

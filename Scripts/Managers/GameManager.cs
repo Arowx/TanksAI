@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,7 @@ namespace Complete
         public GameObject[] m_TankPrefab;             // Reference to the prefab the players will control.
         public TankManager[] m_Tanks;               // A collection of managers for enabling and disabling different aspects of the tanks.
 
+        public List<Transform> m_SpawnPoints;        
         
         private int m_RoundNumber;                  // Which round the game is currently on.
         private WaitForSeconds m_StartWait;         // Used to have a delay whilst the round starts.
@@ -29,8 +31,28 @@ namespace Complete
 
         public ChallengeManager cm;
 
+        public static GameManager use;
+
+
+        public void JumbleSpawnPoints()
+        {
+            int c = m_SpawnPoints.Count;
+
+            for (int i = 0; i < c; i++)
+            {
+                int r = Random.Range(0, c);
+                Transform sp = m_SpawnPoints[r];
+                m_SpawnPoints.RemoveAt(r);
+                m_SpawnPoints.Add(sp);
+            }
+        }
+
+
+
         public void BeginGame()
         {
+            JumbleSpawnPoints();
+
             m_EndOfRoundTime = Time.timeSinceLevelLoad + m_TimeLimit;
 
             // Create the delays so they only have to be made once.
@@ -52,7 +74,7 @@ namespace Complete
             {
                 // ... create them, set their player number and references needed for control.
                 m_Tanks[i].m_Instance =
-                    Instantiate(m_TankPrefab[i], m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
+                    Instantiate(m_TankPrefab[i], m_SpawnPoints[i].position, Quaternion.identity) as GameObject;
                 m_Tanks[i].m_PlayerNumber = i + 1;
                 m_Tanks[i].m_Instance.name = m_Tanks[i].m_Instance.name + i.ToString();
                 m_Tanks[i].Setup();
@@ -117,6 +139,8 @@ namespace Complete
 
         private IEnumerator RoundStarting ()
         {
+            JumbleSpawnPoints();
+
             m_EndOfRoundTime = Time.timeSinceLevelLoad + m_TimeLimit;
 
             // As soon as the round starts reset the tanks and make sure they can't move.
@@ -244,7 +268,7 @@ namespace Complete
 
         // Returns a string message to display at the end of each round.
         private string EndMessage()
-        {
+        {            
             // By default when a round ends there are no winners so the default end message is a draw.
             string message = "DRAW!";
 
@@ -253,7 +277,7 @@ namespace Complete
                 message = m_RoundWinner.m_ColoredPlayerText + "\nWINS THE ROUND!";
 
             // Add some line breaks after the initial message.
-            message += "\n\n\n\n";
+            message += "\n\n";
 
             // Go through all the tanks and add each of their scores to the message.
             for (int i = 0; i < m_Tanks.Length; i++)
@@ -264,6 +288,7 @@ namespace Complete
             // If there is a game winner, change the entire message to reflect that.
             if (m_GameWinner != null)
                 message = m_GameWinner.m_ColoredPlayerText + "\nWINS THE GAME!";
+            
 
             return message;
         }
@@ -274,7 +299,7 @@ namespace Complete
         {
             for (int i = 0; i < m_Tanks.Length; i++)
             {
-                m_Tanks[i].Reset();
+                m_Tanks[i].Reset(m_SpawnPoints[i].position);
             }
         }
 

@@ -18,6 +18,7 @@ namespace Complete
 
         private int tankCount;
 
+        public Text mainText;
         public Text tankText;
         public Text tankAtxt;
         public Text tankBtxt;
@@ -33,9 +34,7 @@ namespace Complete
             for (int i = 0; i < tankCount; i++)
             {
                 tankNames[i] = tanks[i].GetComponent<TankAI>().tankName;
-            }
-
-            UpdateScores();
+            }            
 
             BeginGame();
         }
@@ -43,17 +42,19 @@ namespace Complete
 
         void BeginGame()
         {
+            gm.m_TankPrefab[0] = tanks[tankA];
+            gm.m_TankPrefab[1] = tanks[tankB];
+
             tankAtxt.text = tankNames[tankA];
             tankBtxt.text = tankNames[tankB];
 
-            gm.m_TankPrefab[0] = tanks[tankA];
-            gm.m_TankPrefab[1] = tanks[tankB];
+            UpdateScores();
 
             gm.BeginGame();
         }
 
 
-        void UpdateScores()
+        public void UpdateScores()
         {
             string tankNameText = "";
 
@@ -64,12 +65,12 @@ namespace Complete
 
                 for (int j = 0; j < tankCount; j++)
                 {
-                    if (i == j) tankNameText += "-\t";
-                    else tankNameText += tankScores[i, j] + "\t";
+                    if (i == j) tankNameText += "--\t";
+                    else tankNameText += tankScores[i, j].ToString("00") + "\t";
                     total += tankScores[i, j];
                 }
 
-                tankNameText += "\t" + total.ToString("000");
+                tankNameText += total.ToString("000");
                 if (i < tankCount - 1) tankNameText += "\n";
             }
 
@@ -81,6 +82,7 @@ namespace Complete
         {
             tankScores[tankA, tankB] = scoreA;
             tankScores[tankB, tankA] = scoreB;
+
             UpdateScores();
             NextGame();
         }
@@ -106,6 +108,8 @@ namespace Complete
 
         void ChallengeOver()
         {
+            mainText.text = "TANK AI\nCHALLENGE OVER";
+            tankText.color = Color.white;
             Debug.Log("Challenge Over");
         }
     }

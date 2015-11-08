@@ -12,7 +12,7 @@ namespace Complete
         // different phases of the game.
 
         public Color m_PlayerColor;                             // This is the color this tank will be tinted.
-        public Transform m_SpawnPoint;                          // The position and direction the tank will have when it spawns.
+        
         [HideInInspector] public int m_PlayerNumber;            // This specifies which player this the manager for.
         [HideInInspector] public string m_ColoredPlayerText;    // A string that represents the player with their number colored to match their tank.
         [HideInInspector] public GameObject m_Instance;         // A reference to the instance of the tank when it is created.
@@ -42,7 +42,7 @@ namespace Complete
 
             TankAI tankAI = m_Instance.GetComponent<TankAI>();
 
-            if (tankAI) tank = tankAI.tankName + "[" + m_PlayerNumber + "]";
+            if (tankAI) tank = tankAI.tankName;
 
             // Create a string using the correct color that says 'PLAYER 1' etc based on the tank's color and the player's number.
             m_ColoredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(m_PlayerColor) + "> "+ tank + "</color>";
@@ -76,16 +76,15 @@ namespace Complete
             m_Shooting.enabled = true;
 
             m_CanvasGameObject.SetActive (true);
-        }
-
+        }       
 
         // Used at the start of each round to put the tank into it's default state.
-        public void Reset ()
+        public void Reset (Vector3 pos)
         {            
             m_Instance.GetComponent<TankAI>().Reset();            
 
-            m_Instance.transform.position = m_SpawnPoint.position;
-            m_Instance.transform.rotation = m_SpawnPoint.rotation;
+            m_Instance.transform.position = pos;
+            m_Instance.transform.rotation = Quaternion.identity;
 
             m_Instance.SetActive (false);
             m_Instance.SetActive (true);

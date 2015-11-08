@@ -4,14 +4,10 @@ using System;
 
 public class TankSensor : MonoBehaviour {
 
-    public List<Transform> enemyTanksList;
+    private List<Transform> enemyTanksList = new List<Transform>();
 
-    public LayerMask losMask;
-
-    public void Start()
-    {
-        enemyTanksList = new List<Transform>();
-    }
+	[SerializeField]
+    private LayerMask losMask;
 
     public void Reset()
     {
