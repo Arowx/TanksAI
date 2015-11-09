@@ -5,8 +5,7 @@ using System;
 namespace Complete
 {
     public abstract class TankAI : MonoBehaviour {
-
-		[HideInInspector]
+		
         public string tankName = "<Insert Name>";
 
         protected TankMovement tankMover;
@@ -22,6 +21,8 @@ namespace Complete
         protected abstract void SetName(); // all AI's should set their name - please use Unity forum name
 
         protected void Awake() {
+            SetName();
+
             tankMover = GetComponent<TankMovement>();
             tankNav = GetComponent<TankNavigation>();
             tankSensor = GetComponentInChildren<TankSensor>();

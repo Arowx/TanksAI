@@ -47,17 +47,22 @@ public class TankSensor : MonoBehaviour {
 
 	public void OnTriggerEnter( Collider other )
     {
-        if (other.transform != transform)
+        Transform otherTank = other.transform;
+
+        if ((otherTank != transform) &&
+            !enemyTanksList.Contains(otherTank))
         {
-            enemyTanksList.Add(other.transform);
+            enemyTanksList.Add(otherTank);
         }
     }
 
     public void OnTriggerExit( Collider other )
     {
-        if (enemyTanksList.Contains(other.transform))
+        Transform otherTank = other.transform;
+
+        if (enemyTanksList.Contains(otherTank))
         {
-            enemyTanksList.Remove(other.transform);
+            enemyTanksList.Remove(otherTank);
         }
     }
 
